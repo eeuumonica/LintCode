@@ -1,0 +1,39 @@
+/*
+For a given source string and a target string, you should output the first index(from 0) of target string in source string.
+If target does not exist in source, just return -1.
+*/
+
+class Solution {
+    /**
+     * Returns a index to the first occurrence of target in source,
+     * or -1  if target is not part of source.
+     * @param source string to be scanned.
+     * @param target string containing the sequence of characters to match.
+     */
+    public int strStr(String source, String target) {
+		//corner case, null
+		if (source == null || target == null) {
+			return - 1;
+		}
+		//source is shorter than target
+		if (source.length() < target.length()) {
+			return - 1;
+		}
+		//for loop to validate
+		int j;
+		for (int i = 0; i < source.length() - target.length() + 1; i++) {
+			for (j = 0; j < target.length(); j++) {
+				//i+j represents each element found in source string 
+				//if does not match element in target string, inner loop ends
+				if (source.charAt(i + j) != target.charAt(j)) {
+					break;
+				}
+			}
+			//inner loop finished, target found, return starting index
+			if (j == target.length()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+}
