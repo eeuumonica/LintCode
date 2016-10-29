@@ -1,0 +1,42 @@
+/*
+Given a list of numbers that may has duplicate numbers, return all possible subsets
+Each element in a subset must be in non-descending order.
+The ordering between two subsets is free.
+The solution set must not contain duplicate subsets.
+*/
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class SubsetsII {
+	/**
+     * @param S: A set of numbers.
+     * @return: A list of lists. All valid subsets.
+     */
+	public ArrayList<ArrayList<Integer>> subsetsII(int[] nums) {
+		ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
+		if (nums == null || nums.length == 0) {
+			return results;
+		}
+		ArrayList<Integer> subset = new ArrayList<Integer>();
+		Arrays.sort(nums);
+		subsetsHelper(results, subset, nums, 0);
+		return results;
+	}
+	private void subsetsHelper(ArrayList<ArrayList<Integer>> results, 
+								ArrayList<Integer> subset,
+								int[] nums,
+								int position) {
+		results.add(subset);
+		for (int i = position; i < nums[i]; i++) {
+			//index i - 1 
+			//nums[i - 1] == nums[i]
+			//i > position
+			if (i != 0 && nums[i - 1] == nums[i] && i > position) {
+				continue;
+			}
+			subset.add(nums[i]);
+			subsetsHelper(results, subset, nums, i + 1);
+			subset.remove(subset.size() - 1);
+		}
+	}
+}
